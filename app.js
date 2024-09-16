@@ -4,54 +4,47 @@ document.getElementById('searchBtn').addEventListener('click', function() {
         alert('Por favor, insira o nome de uma cidade');
         return;
     }
-    // Insira sua chave da OpenWeatherMap aqui
-    const apiKey = '9b0437d3c0c8cc7114a40be128d81371'; 
-    const geocodingUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${apiKey}`;
+    // Insira sua chave da WeatherApi aqui
+    const apiKey = 'SUA_API_KEY'; 
+    const weatherapi = `http://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${city}&days=5&aqi=no&alerts=no`;
 
     document.getElementById('loading').style.display = 'block';
     document.getElementById('weatherResults').innerHTML = '';
     document.getElementById('error').style.display = 'none';
 
-    // Fazer a busca de latitude e longitude
-    fetch(geocodingUrl)
+    fetch(weatherapi)
         .then(response => {
             if (!response.ok) {
-                throw new Error('Erro ao buscar coordenadas');
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.length === 0) {
                 throw new Error('Cidade não encontrada');
-            }
-
-            const { lat, lon } = data[0];
-
-            // Chamar a API do clima com as coordenadas
-            const weatherUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts&appid=${apiKey}&lang=pt_br&units=metric`;
-
-            return fetch(weatherUrl);
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Erro ao buscar dados meteorológicos');
             }
             return response.json();
         })
         .then(data => {
             document.getElementById('loading').style.display = 'none';
             const weatherData = `
-                <h2>Clima para ${city}</h2>
-                <p>Temperatura: ${data.current.temp} °C</p>
-                <p>Umidade: ${data.current.humidity}%</p>
-                <p>Clima: ${data.current.weather[0].description}</p>
-                <img src="https://openweathermap.org/img/wn/${data.current.weather[0].icon}.png" alt="ícone do clima">
-            `;
-            document.getElementById('weatherResults').innerHTML = weatherData;
+            <h2>${data.location.name}, ${data.location.country}</h2>
+            <p>Temperatura Atual: ${data.current.temp_c} °C</p>
+            <p>Umidade Atual: ${data.current.humidity}%</p>
+            <p>Clima Atual: ${data.current.condition.text}</p>
+            <img src="https:${data.current.condition.icon}" alt="ícone do clima">
+            <h3>Previsão do Tempo para os Próximos 5 Dias</h3>
+            ${data.forecast.forecastday.slice(0, 5).map(day => `
+                <div>
+                    <h4>${new Date(day.date_epoch * 1000).toLocaleDateString()}</h4>
+                    <p>Temperatura Máxima: ${day.day.maxtemp_c} °C</p>
+                    <p>Temperatura Mínima: ${day.day.mintemp_c} °C</p>
+                    <p>Umidade Média: ${day.day.avghumidity}%</p>
+                    <p>Clima: ${day.day.condition.text}</p>
+                    <img src="https:${day.day.condition.icon}" alt="ícone do clima">
+                </div>
+            `).join('')}
+        `;
+
+        document.getElementById('weather-info').innerHTML = weatherData;
         })
         .catch(error => {
             document.getElementById('loading').style.display = 'none';
             document.getElementById('error').style.display = 'block';
-            console.error(error);
+            console.error('Erro ao buscar os dados da API:', error);
         });
 });
