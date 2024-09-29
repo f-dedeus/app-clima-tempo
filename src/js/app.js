@@ -5,7 +5,7 @@ document.getElementById('searchBtn').addEventListener('click', function() {
         return;
     }
     // Insira sua chave da WeatherApi aqui
-    const apiKey = 'SUA_API_KEY'; 
+    const apiKey = '471ec5ff85e448b49b3185905241609'; 
     const weatherapi = `http://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${city}&days=5&aqi=no&alerts=no`;
 
     document.getElementById('loading').style.display = 'block';

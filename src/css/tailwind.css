@@ -1,0 +1,26 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+
+/* tailwind.css */
+
+/* Estilos para o body */
+body {
+    @apply font-sans bg-gray-100 text-center p-4;
+}
+
+/* Estilos para o container */
+.container {
+    @apply max-w-screen-md mx-auto p-4 bg-white shadow-md;
+}
+
+/* Estilos para input e button */
+input, button {
+    @apply p-2 m-2 text-base;
+}
+
+/* Estilos para .results, .loading, .error */
+.results, .loading, .error {
+    @apply mt-4;
+}
