@@ -41,8 +41,7 @@ async function translateCity(city, direction) {
 // Função assíncrona para fazer a requisição à API usando axios
 async function getWeatherData(city) {
     const translatedCity = await translateCity(city, 'pt-en'); // Traduz a cidade para o inglês
-    const weatherApiUrl = `http://api.weatherapi.com/v1/forecast.json?key=${API_WEATHER_KEY}&q=${translatedCity}&days=5&aqi=no&alerts=no&lang=en`; // 'lang=en' para resposta em inglês
-
+    const weatherApiUrl = `http://api.weatherapi.com/v1/forecast.json?key=${API_WEATHER_KEY}&q=${translatedCity}&days=5&aqi=no&alerts=no&lang=pt`;
     document.getElementById('loading').style.display = 'block';
     document.getElementById('weatherResults').innerHTML = '';
     document.getElementById('error').style.display = 'none';
@@ -69,7 +68,7 @@ function processWeatherData(data) {
         <p>Umidade Atual: ${data.current.humidity}%</p>
         <p>Clima Atual: ${data.current.condition.text}</p>
         <img src="https:${data.current.condition.icon}" alt="ícone do clima">
-        <h3>Previsão do Tempo para os Próximos 5 Dias</h3>
+        <h3>Previsão do Tempo para os Próximos 3 Dias</h3>
         ${data.forecast.forecastday.slice(0, 5).map(day => `
             <div>
                 <h4>${new Date(day.date_epoch * 1000).toLocaleDateString()}</h4>

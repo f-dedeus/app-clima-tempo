@@ -2,24 +2,52 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-body {
-    @apply font-sans bg-blue-700 text-center p-5;
+.body {
+    @apply bg-gray-900 flex items-center justify-center min-h-screen
 }
 
 .container {
-    max-width: 600px;
+    @apply bg-white p-8 rounded-lg shadow-lg max-w-md
+}
+.input {
+    @apply w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500
+}
+
+.button {
+    @apply bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors
+}
+
+.results {
+    @apply mt-6 text-xl font-semibold text-gray-800
+}
+
+.error  {
+    @apply mt-6 hidden text-red-500 text-center
+}
+
+.loader {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top: 4px solid #3498db;
+    animation: spin 1s linear infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin: 0 auto;
-    padding: 20px;
-    background-color: white;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-input, button {
-    padding: 10px;
-    margin: 10px;
-    font-size: 16px;
+.loader svg {
+    width: 100%;
+    height: 100%;
+    stroke: #fff;
 }
 
-.results, .loading, .error {
-    margin-top: 20px;
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
+
+
+  
