@@ -1,3 +1,6 @@
+import { API_WEATHER_KEY } from "../../conf.js";
+
+
 document.getElementById('searchBtn').addEventListener('click', async function() {
     const city = document.getElementById('city').value;
     if (city === '') {
@@ -27,6 +30,7 @@ async function translateCity(city, direction) {
     });
 
     if (!response.ok) {
+        console.log(response)
         throw new Error('Erro ao traduzir a cidade');
     }
 
@@ -37,8 +41,7 @@ async function translateCity(city, direction) {
 // Função assíncrona para fazer a requisição à API usando axios
 async function getWeatherData(city) {
     const translatedCity = await translateCity(city, 'pt-en'); // Traduz a cidade para o inglês
-    const apiKey = '471ec5ff85e448b49b3185905241609';
-    const weatherApiUrl = `http://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${translatedCity}&days=5&aqi=no&alerts=no&lang=en`; // 'lang=en' para resposta em inglês
+    const weatherApiUrl = `http://api.weatherapi.com/v1/forecast.json?key=${API_WEATHER_KEY}&q=${translatedCity}&days=5&aqi=no&alerts=no&lang=en`; // 'lang=en' para resposta em inglês
 
     document.getElementById('loading').style.display = 'block';
     document.getElementById('weatherResults').innerHTML = '';

@@ -1,0 +1,2 @@
+export const API_TRANSLATOR_KEY = 'YOUR_API_KEY';
+export const API_WEATHER_KEY = 'YOUR_API_KEY';
