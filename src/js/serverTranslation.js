@@ -1,10 +1,13 @@
 import express from 'express';
-import cors from 'cors'; // Importa o cors
+import cors from 'cors'; 
 import fetch from 'node-fetch';
+import { API_TRANSLATOR_KEY } from '../../conf.js';
+
 
 const app = express();
 const port = 3000;
 
+const apiTranslatorKey = API_TRANSLATOR_KEY
 // Usando o middleware cors
 app.use(cors()); // Isso permitirá todas as origens. Você pode configurar mais tarde se necessário.
 
@@ -13,11 +16,10 @@ app.use(express.json());
 // Rota para traduzir a cidade
 app.post('/translate', async (req, res) => {
     const { city, direction } = req.body; // Recebe a cidade e a direção
-    const apiKey = '3185eb38-b583-4f4d-854f-aec334a41bef:fx'; // Substitua pela sua chave da API do DeepL
     const url = 'https://api-free.deepl.com/v2/translate';
 
     const params = new URLSearchParams();
-    params.append('auth_key', apiKey);
+    params.append('auth_key', apiTranslatorKey);
     params.append('text', city);
 
     // Define o idioma alvo baseado na direção da tradução
